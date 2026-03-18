@@ -1,5 +1,7 @@
 streamlit
-tensorflow-cpu==2.15.0
+keras
+tensorflow-cpu
 pillow
 plotly
 numpy
+h5py
