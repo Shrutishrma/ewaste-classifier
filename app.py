@@ -17,226 +17,274 @@ st.markdown("""
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body, [class*="css"], .stApp { font-family: 'Plus Jakarta Sans', sans-serif !important; }
-.stApp { background: #f8fafb !important; }
+.stApp { background: #f0faf2 !important; }
 .block-container { padding: 0 !important; max-width: 100% !important; }
 section[data-testid="stSidebar"] { display: none; }
 
-.main-wrap { padding: 24px 32px; }
+/* ── Animated background blobs ── */
+.bg-blobs {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0; overflow: hidden;
+}
+.blob {
+    position: absolute; border-radius: 50%;
+    animation: float 8s ease-in-out infinite;
+}
+.blob-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(134,239,172,0.25) 0%, transparent 70%); top: -100px; right: -100px; animation-delay: 0s; }
+.blob-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(74,222,128,0.15) 0%, transparent 70%); bottom: 10%; left: -80px; animation-delay: -3s; }
+.blob-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(187,247,208,0.3) 0%, transparent 70%); top: 40%; right: 20%; animation-delay: -5s; }
+@keyframes float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+}
 
-/* ── Navbar ── */
+/* ── Main wrapper ── */
+.main-wrap { position: relative; z-index: 1; padding: 28px 36px; }
+
+/* ── Nav bar ── */
 .navbar {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 14px 28px;
-    background: #ffffff;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
-    margin-bottom: 24px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    padding: 16px 32px; background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(20px); border-radius: 18px;
+    border: 1px solid rgba(134,239,172,0.4);
+    margin-bottom: 32px;
+    animation: slideDown 0.6s ease;
 }
-.nav-logo { font-size: 20px; font-weight: 800; color: #1a202c; letter-spacing: -0.5px; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+.nav-logo { font-size: 22px; font-weight: 800; color: #14532d; letter-spacing: -0.5px; }
 .nav-logo span { color: #16a34a; }
 .nav-badge {
     font-family: 'Space Mono', monospace !important;
     font-size: 10px; color: #16a34a;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
+    background: rgba(74,222,128,0.12);
+    border: 1px solid rgba(74,222,128,0.3);
     padding: 5px 14px; border-radius: 100px;
     letter-spacing: 1px;
 }
 .nav-pills { display: flex; gap: 8px; }
 .nav-pill {
-    font-size: 12px; font-weight: 500; color: #475569;
-    background: #f8fafc; border: 1px solid #e2e8f0;
-    padding: 6px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 600; color: #15803d;
+    background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25);
+    padding: 6px 16px; border-radius: 100px; cursor: pointer;
+    transition: all 0.2s;
 }
+.nav-pill:hover { background: rgba(74,222,128,0.2); }
 
-/* ── Hero ── */
-.hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; margin-bottom: 20px; }
-
+/* ── Hero section ── */
+.hero-section {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    margin-bottom: 24px;
+}
 .hero-main {
-    background: #0f172a;
-    border-radius: 24px; padding: 44px 48px;
+    background: linear-gradient(135deg, #14532d 0%, #166534 40%, #15803d 100%);
+    border-radius: 28px; padding: 48px;
     position: relative; overflow: hidden;
+    animation: fadeUp 0.7s ease;
 }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 .hero-main::before {
     content: ''; position: absolute;
-    width: 350px; height: 350px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(22,163,74,0.2) 0%, transparent 65%);
-    top: -80px; right: -60px; pointer-events: none;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    top: -80px; right: -60px;
 }
 .hero-main::after {
     content: ''; position: absolute;
     width: 200px; height: 200px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 65%);
-    bottom: -30px; left: 60px; pointer-events: none;
+    background: rgba(255,255,255,0.04);
+    bottom: -40px; right: 80px;
 }
 .hero-eyebrow {
     font-family: 'Space Mono', monospace !important;
-    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-    color: #4ade80; margin-bottom: 20px;
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: #86efac; margin-bottom: 20px;
     display: flex; align-items: center; gap: 8px;
 }
-.hero-eyebrow::before { content: ''; width: 20px; height: 2px; background: #4ade80; border-radius: 2px; display: inline-block; }
-.hero-h1 {
-    font-size: 52px; font-weight: 800; color: #f1f5f9;
-    line-height: 1.05; letter-spacing: -2px; margin-bottom: 16px;
-}
+.hero-eyebrow::before { content: ''; width: 24px; height: 2px; background: #4ade80; border-radius: 2px; }
+.hero-h1 { font-size: 58px; font-weight: 800; color: #ffffff; line-height: 1.0; letter-spacing: -2px; margin-bottom: 16px; }
 .hero-h1 em { font-style: normal; color: #4ade80; }
-.hero-desc { font-size: 15px; color: #94a3b8; line-height: 1.7; max-width: 420px; margin-bottom: 28px; }
-.hero-tags { display: flex; gap: 10px; flex-wrap: wrap; }
-.hero-tag {
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 100px; padding: 7px 16px;
-    font-size: 12px; font-weight: 600; color: #e2e8f0;
+.hero-desc { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; max-width: 380px; margin-bottom: 32px; }
+.hero-stats { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-stat {
+    background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px; padding: 8px 18px;
+    font-size: 13px; font-weight: 600; color: #ffffff;
 }
-.hero-tag b { color: #4ade80; }
+.hero-stat b { color: #4ade80; }
 
-/* ── Right stat cards ── */
-.stat-stack { display: flex; flex-direction: column; gap: 16px; }
+/* ── Stats panel ── */
+.stats-panel {
+    display: grid; grid-template-rows: 1fr 1fr; gap: 16px;
+    animation: fadeUp 0.7s ease 0.1s both;
+}
 .stat-card {
-    background: #ffffff; border-radius: 20px; padding: 24px 28px;
-    border: 1px solid #e2e8f0;
-    display: flex; align-items: center; gap: 18px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    transition: transform 0.2s, box-shadow 0.2s;
-    flex: 1;
+    background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);
+    border-radius: 22px; padding: 28px;
+    border: 1px solid rgba(134,239,172,0.3);
+    display: flex; align-items: center; gap: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
-.stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(22,101,52,0.12); }
 .stat-icon {
-    width: 52px; height: 52px; border-radius: 14px;
+    width: 60px; height: 60px; border-radius: 18px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 24px; flex-shrink: 0;
-    background: #f0fdf4;
+    font-size: 28px; flex-shrink: 0;
 }
-.stat-val { font-size: 32px; font-weight: 800; color: #0f172a; font-family: 'Space Mono', monospace !important; letter-spacing: -1px; }
-.stat-lbl { font-size: 13px; font-weight: 600; color: #374151; margin-top: 2px; }
-.stat-sub { font-size: 11px; color: #9ca3af; margin-top: 3px; }
+.stat-icon.green { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+.stat-icon.lime { background: linear-gradient(135deg, #f7fee7, #d9f99d); }
+.stat-icon.emerald { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+.stat-val { font-size: 36px; font-weight: 800; color: #14532d; letter-spacing: -1px; font-family: 'Space Mono', monospace !important; }
+.stat-lbl { font-size: 13px; color: #4d7c0f; font-weight: 500; margin-top: 2px; }
+.stat-sub { font-size: 11px; color: #86a875; margin-top: 4px; }
 
-/* ── Content grid ── */
-.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-.panel {
-    background: #ffffff; border-radius: 22px; padding: 28px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+/* ── Upload & Result ── */
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.upload-panel {
+    background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);
+    border-radius: 24px; padding: 32px;
+    border: 1px solid rgba(134,239,172,0.3);
+    animation: fadeUp 0.7s ease 0.2s both;
 }
-.panel-hd { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
-.panel-sub { font-size: 12px; color: #64748b; margin-bottom: 20px; }
+.panel-title { font-size: 14px; font-weight: 700; color: #14532d; margin-bottom: 6px; }
+.panel-sub { font-size: 13px; color: #4d7c0f; margin-bottom: 20px; }
 
-/* ── Detection card ── */
-.det-card {
-    background: #0f172a; border-radius: 18px; padding: 24px;
-    margin-bottom: 14px; position: relative; overflow: hidden;
+.result-panel {
+    background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);
+    border-radius: 24px; padding: 32px;
+    border: 1px solid rgba(134,239,172,0.3);
+    animation: fadeUp 0.7s ease 0.3s both;
 }
-.det-card::before {
-    content: ''; position: absolute; width: 200px; height: 200px;
-    border-radius: 50%; background: radial-gradient(circle, rgba(74,222,128,0.12) 0%, transparent 65%);
-    top: -50px; right: -30px; pointer-events: none;
+
+/* ── Detection result ── */
+.detection-card {
+    background: linear-gradient(135deg, #14532d 0%, #166534 60%, #15803d 100%);
+    border-radius: 20px; padding: 28px; margin-bottom: 16px;
+    position: relative; overflow: hidden;
 }
-.det-lbl {
+.detection-card::after {
+    content: ''; position: absolute;
+    width: 180px; height: 180px; border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    top: -40px; right: -40px;
+}
+.det-label {
     font-family: 'Space Mono', monospace !important;
-    font-size: 9px; color: #64748b; letter-spacing: 2px;
-    text-transform: uppercase; margin-bottom: 10px;
+    font-size: 10px; color: rgba(134,239,172,0.8);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;
 }
-.det-emoji { font-size: 44px; line-height: 1; margin-bottom: 8px; display: block; }
-.det-name { font-size: 36px; font-weight: 800; color: #f1f5f9; letter-spacing: -1px; margin-bottom: 18px; }
-.conf-track { background: rgba(255,255,255,0.1); border-radius: 100px; height: 6px; margin-bottom: 10px; overflow: hidden; }
-.conf-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #22c55e, #86efac); }
-.conf-row { display: flex; justify-content: space-between; font-size: 12px; color: #64748b; }
-.conf-pct { font-family: 'Space Mono', monospace !important; color: #4ade80; font-weight: 700; }
+.det-emoji { font-size: 48px; line-height: 1; margin-bottom: 10px; display: block; }
+.det-name { font-size: 40px; font-weight: 800; color: #ffffff; letter-spacing: -1.5px; margin-bottom: 18px; }
+.conf-track { background: rgba(255,255,255,0.15); border-radius: 100px; height: 8px; margin-bottom: 10px; overflow: hidden; }
+.conf-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #4ade80, #86efac); }
+.conf-meta { display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.65); }
+.conf-pct { font-family: 'Space Mono', monospace !important; font-size: 13px; color: #4ade80; font-weight: 700; }
 
 /* ── Tip cards ── */
 .tip-card {
-    background: #f0fdf4; border: 1px solid #bbf7d0;
-    border-radius: 14px; padding: 16px 18px; margin-bottom: 12px;
+    background: #f0fdf4; border: 1.5px solid #bbf7d0;
+    border-radius: 16px; padding: 18px 20px; margin-bottom: 14px;
 }
-.tip-title { font-size: 13px; font-weight: 700; color: #166534; margin-bottom: 5px; }
-.tip-body { font-size: 12px; color: #374151; line-height: 1.6; }
+.tip-title { font-size: 13px; font-weight: 700; color: #166534; margin-bottom: 6px; }
+.tip-body { font-size: 12px; color: #4d7c0f; line-height: 1.65; }
 .hazard-card {
-    background: #fff7ed; border: 1px solid #fed7aa;
-    border-radius: 14px; padding: 16px 18px; margin-bottom: 12px;
+    background: #fff7ed; border: 1.5px solid #fed7aa;
+    border-radius: 16px; padding: 18px 20px; margin-bottom: 14px;
 }
-.hazard-title { font-size: 13px; font-weight: 700; color: #c2410c; margin-bottom: 5px; }
-.hazard-body { font-size: 12px; color: #431407; line-height: 1.6; }
+.hazard-title { font-size: 13px; font-weight: 700; color: #c2410c; margin-bottom: 6px; }
+.hazard-body { font-size: 12px; color: #9a3412; line-height: 1.65; }
 
-/* ── Metrics row ── */
-.metrics-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+/* ── Mini metrics ── */
+.metrics-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
 .metric-box {
-    background: #f8fafc; border: 1px solid #e2e8f0;
-    border-radius: 12px; padding: 14px; text-align: center;
-}
-.metric-val { font-size: 22px; font-weight: 800; color: #0f172a; font-family: 'Space Mono', monospace !important; }
-.metric-lbl { font-size: 10px; color: #64748b; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
-
-/* ── Chips ── */
-.chip-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-.chip {
     background: #f0fdf4; border: 1px solid #bbf7d0;
-    color: #166534; font-size: 11px; font-weight: 600;
-    padding: 4px 11px; border-radius: 100px;
+    border-radius: 14px; padding: 14px; text-align: center;
+    transition: transform 0.2s;
 }
+.metric-box:hover { transform: translateY(-2px); }
+.metric-val { font-size: 22px; font-weight: 800; color: #14532d; font-family: 'Space Mono', monospace !important; }
+.metric-lbl { font-size: 10px; color: #4d7c0f; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+
+/* ── Chip row ── */
+.chip-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.chip {
+    background: #dcfce7; border: 1px solid #86efac;
+    color: #14532d; font-size: 11px; font-weight: 600;
+    padding: 5px 12px; border-radius: 100px;
+    transition: all 0.2s;
+}
+.chip:hover { background: #4ade80; color: #052e16; }
 
 /* ── Empty state ── */
 .empty-state {
-    min-height: 280px; display: flex; flex-direction: column;
+    min-height: 320px; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    border: 2px dashed #cbd5e1; border-radius: 16px;
-    background: #f8fafc; text-align: center; padding: 32px;
+    border: 2px dashed #86efac; border-radius: 20px;
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    padding: 40px; text-align: center;
 }
-.empty-icon { font-size: 56px; opacity: 0.25; margin-bottom: 14px; }
-.empty-text { font-size: 15px; font-weight: 600; color: #374151; }
-.empty-sub { font-size: 12px; color: #9ca3af; margin-top: 6px; }
+.empty-icon { font-size: 72px; opacity: 0.35; margin-bottom: 16px; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1)}50%{transform:scale(1.08)} }
+.empty-text { font-size: 16px; font-weight: 600; color: #166534; }
+.empty-sub { font-size: 12px; color: #4d7c0f; margin-top: 6px; }
 
 /* ── Bottom strip ── */
-.bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-.arch-panel {
-    background: #ffffff; border-radius: 22px; padding: 28px;
-    border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+.bottom-strip {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin-bottom: 24px;
 }
-.arch-title { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 16px; }
-.arch-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 9px 0; border-bottom: 1px solid #f1f5f9; font-size: 13px;
+.arch-card {
+    background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);
+    border-radius: 22px; padding: 28px;
+    border: 1px solid rgba(134,239,172,0.3);
+    animation: fadeUp 0.7s ease 0.4s both;
 }
+.arch-title { font-size: 15px; font-weight: 700; color: #14532d; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.arch-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #dcfce7; font-size: 13px; }
 .arch-row:last-child { border-bottom: none; }
-.arch-key { color: #64748b; font-weight: 500; }
-.arch-val { color: #0f172a; font-weight: 700; font-family: 'Space Mono', monospace !important; font-size: 11px; }
+.arch-key { color: #4d7c0f; font-weight: 500; }
+.arch-val { color: #14532d; font-weight: 700; font-family: 'Space Mono', monospace !important; font-size: 12px; }
 
-.perf-panel {
-    background: #0f172a; border-radius: 22px; padding: 28px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+.perf-card {
+    background: linear-gradient(135deg, #052e16 0%, #14532d 100%);
+    border-radius: 22px; padding: 28px;
+    animation: fadeUp 0.7s ease 0.5s both;
 }
-.perf-title { font-size: 15px; font-weight: 700; color: #f1f5f9; margin-bottom: 20px; }
-.perf-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.perf-cls { font-size: 12px; color: #94a3b8; width: 78px; font-weight: 500; }
-.perf-track { flex: 1; background: rgba(255,255,255,0.08); border-radius: 100px; height: 5px; overflow: hidden; }
-.perf-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #22c55e, #86efac); }
-.perf-pct { font-family: 'Space Mono', monospace !important; font-size: 11px; color: #4ade80; width: 32px; text-align: right; }
+.perf-title { font-size: 15px; font-weight: 700; color: #4ade80; margin-bottom: 20px; }
+.perf-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.perf-class { font-size: 12px; color: rgba(255,255,255,0.6); width: 80px; font-weight: 500; }
+.perf-bar-track { flex: 1; background: rgba(255,255,255,0.08); border-radius: 100px; height: 6px; }
+.perf-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #4ade80, #86efac); }
+.perf-pct { font-family: 'Space Mono', monospace !important; font-size: 11px; color: #4ade80; width: 36px; text-align: right; }
 
 /* ── Footer ── */
-.footer {
-    background: #ffffff; border-radius: 14px; padding: 14px 24px;
-    border: 1px solid #e2e8f0;
+.footer-bar {
+    background: rgba(255,255,255,0.7); backdrop-filter: blur(20px);
+    border-radius: 16px; padding: 16px 28px;
+    border: 1px solid rgba(134,239,172,0.25);
     display: flex; justify-content: space-between; align-items: center;
-    font-size: 11px; color: #94a3b8;
+    font-size: 11px; color: #4d7c0f;
     font-family: 'Space Mono', monospace !important;
 }
 
 /* ── Streamlit overrides ── */
 div[data-testid="stFileUploader"] {
-    background: #f8fafc !important;
-    border: 2px dashed #cbd5e1 !important;
-    border-radius: 14px !important;
-}
-div[data-testid="stFileUploader"]:hover { border-color: #22c55e !important; }
-[data-testid="stExpander"] {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+    border: 2px dashed #86efac !important;
     border-radius: 16px !important;
+    transition: all 0.3s !important;
 }
+div[data-testid="stFileUploader"]:hover { border-color: #16a34a !important; }
+[data-testid="stExpander"] {
+    background: rgba(255,255,255,0.9) !important;
+    border: 1px solid rgba(134,239,172,0.3) !important;
+    border-radius: 18px !important;
+}
+.stSpinner > div { border-top-color: #16a34a !important; }
 </style>
 """, unsafe_allow_html=True)
 
+# ── Constants ─────────────────────────────────────────
 CLASS_NAMES = ['battery','biological','brown-glass','cardboard',
                'clothes','green-glass','metal','paper',
                'plastic','shoes','trash','white-glass']
@@ -247,18 +295,18 @@ EMOJIS = {
     'shoes':'👟','trash':'🗑️','white-glass':'🥛'
 }
 TIPS = {
-    'battery':     ('⚠️ Hazardous E-Waste — Handle carefully!', 'Take to certified e-waste collection center immediately. Contains toxic lead and acid — never dispose in regular trash.', True),
-    'biological':  ('🌱 Compostable Organic Waste', 'Add to green bin or compost. Returns nutrients to soil naturally within weeks.', False),
-    'brown-glass': ('♻️ Glass Recycling', 'Rinse clean and place in glass recycling bin. Glass is 100% infinitely recyclable!', False),
-    'cardboard':   ('♻️ Paper & Cardboard', 'Flatten boxes before recycling. Keep dry — wet cardboard cannot be processed.', False),
-    'clothes':     ('👕 Donate or Textile Recycle', 'Donate if wearable. Many brands have take-back programs for worn items.', False),
-    'green-glass': ('♻️ Glass Recycling', 'Rinse and sort by color. Color-separated glass has higher market value.', False),
-    'metal':       ('🔧 Metal Recycling', 'High-value recyclable! Scrap metal dealers and recycling bins accept all types.', False),
-    'paper':       ('♻️ Paper Recycling', 'Keep dry and flat. Paper can be recycled 5–7 times before fibres degrade.', False),
-    'plastic':     ('🧴 Plastic Recycling', 'Check the recycling number. Most #1 PET and #2 HDPE are widely accepted.', False),
-    'shoes':       ('👟 Donate First', 'If wearable, donate to charity. Nike, Adidas have shoe recycling programs.', False),
-    'trash':       ('🗑️ General Waste — Last Resort', 'Remember: Reduce → Reuse → Recycle → Trash.', False),
-    'white-glass': ('♻️ Clear Glass Recycling', 'Most valuable glass type for recyclers — high demand. Rinse well first.', False),
+    'battery':     ('⚠️ HAZARDOUS — E-Waste!', 'Take to certified e-waste collection immediately. Contains toxic lead & acid — never bin it.', True),
+    'biological':  ('🌱 Compostable', 'Add to green bin or compost. Returns nutrients to soil naturally.', False),
+    'brown-glass': ('♻️ Glass Recycling', 'Rinse and place in glass bin. Glass is infinitely recyclable!', False),
+    'cardboard':   ('♻️ Paper Recycling', 'Flatten before recycling. Keep dry — wet cardboard cannot be recycled.', False),
+    'clothes':     ('👕 Donate or Recycle', 'Donate if wearable. Many brands have take-back programs.', False),
+    'green-glass': ('♻️ Glass Recycling', 'Rinse and sort by color. Separated glass has higher recycling value.', False),
+    'metal':       ('🔧 Metal Recycling', 'High-value recyclable! Scrap metal dealers accept all types.', False),
+    'paper':       ('♻️ Paper Recycling', 'Keep dry and flat. Paper recycles 5-7 times!', False),
+    'plastic':     ('🧴 Plastic Recycling', 'Check the number. Most #1 PET and #2 HDPE are widely accepted.', False),
+    'shoes':       ('👟 Donate First', 'If wearable, donate. Nike, Adidas have shoe recycling programs.', False),
+    'trash':       ('🗑️ General Waste', 'Last resort. Remember: Reduce → Reuse → Recycle → Trash.', False),
+    'white-glass': ('♻️ Clear Glass', 'Most valuable glass type for recyclers. Rinse well first.', False),
 }
 
 @st.cache_resource
@@ -273,6 +321,7 @@ def predict(image, model):
     idx = np.argmax(preds)
     return CLASS_NAMES[idx], float(preds[idx]*100), preds
 
+# Load model
 with st.spinner(""):
     try:
         model = load_model()
@@ -280,7 +329,15 @@ with st.spinner(""):
         st.error(f"Place best.keras in same folder. {e}")
         st.stop()
 
-st.markdown('<div class="main-wrap">', unsafe_allow_html=True)
+# ── Animated background ───────────────────────────────
+st.markdown("""
+<div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+</div>
+<div class="main-wrap">
+""", unsafe_allow_html=True)
 
 # ── Navbar ────────────────────────────────────────────
 st.markdown("""
@@ -295,23 +352,23 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ── Hero ──────────────────────────────────────────────
+# ── Hero + Stats ──────────────────────────────────────
 st.markdown("""
-<div class="hero-grid">
+<div class="hero-section">
     <div class="hero-main">
         <div class="hero-eyebrow">Smart Waste Intelligence</div>
         <h1 class="hero-h1">Sort Smarter.<br><em>Waste Less.</em></h1>
-        <p class="hero-desc">AI-powered waste classification using MobileNetV2 transfer learning. Upload any waste image for instant classification and recycling guidance.</p>
-        <div class="hero-tags">
-            <div class="hero-tag"><b>94.7%</b> Accuracy</div>
-            <div class="hero-tag"><b>12</b> Categories</div>
-            <div class="hero-tag"><b>15K+</b> Images</div>
-            <div class="hero-tag"><b>2-Phase</b> Fine-tuning</div>
+        <p class="hero-desc">AI-powered waste classification using MobileNetV2 deep learning. Upload any waste image for instant classification and recycling guidance.</p>
+        <div class="hero-stats">
+            <div class="hero-stat"><b>94.7%</b> Accuracy</div>
+            <div class="hero-stat"><b>12</b> Categories</div>
+            <div class="hero-stat"><b>15K+</b> Training Images</div>
+            <div class="hero-stat"><b>2-Phase</b> Fine-tuning</div>
         </div>
     </div>
-    <div class="stat-stack">
+    <div class="stats-panel">
         <div class="stat-card">
-            <div class="stat-icon">♻️</div>
+            <div class="stat-icon green">♻️</div>
             <div>
                 <div class="stat-val">94.7%</div>
                 <div class="stat-lbl">Model Accuracy</div>
@@ -319,7 +376,7 @@ st.markdown("""
             </div>
         </div>
         <div class="stat-card">
-            <div class="stat-icon">🗂️</div>
+            <div class="stat-icon lime">🗂️</div>
             <div>
                 <div class="stat-val">12</div>
                 <div class="stat-lbl">Waste Categories</div>
@@ -331,16 +388,21 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ── Upload & Result ───────────────────────────────────
+st.markdown('<div class="content-grid">', unsafe_allow_html=True)
+
+# LEFT — upload
 col1, col2 = st.columns(2, gap="large")
 
 with col1:
     st.markdown("""
-    <div class="panel">
-        <div class="panel-hd">📸 Upload Waste Image</div>
-        <div class="panel-sub">Drag & drop or browse — JPG, PNG, JPEG supported</div>
+    <div class="upload-panel">
+        <div class="panel-title">📸 Upload Waste Image</div>
+        <div class="panel-sub">Drag & drop or browse — JPG, PNG supported</div>
     </div>
     """, unsafe_allow_html=True)
-    uploaded = st.file_uploader("", type=['jpg','jpeg','png'], label_visibility="collapsed")
+
+    uploaded = st.file_uploader("", type=['jpg','jpeg','png'],
+                                label_visibility="collapsed")
     if uploaded:
         image = Image.open(uploaded).convert('RGB')
         st.image(image, use_container_width=True)
@@ -350,36 +412,37 @@ with col1:
 with col2:
     if not uploaded:
         st.markdown("""
-        <div class="panel">
-            <div class="panel-hd">🎯 Classification Result</div>
+        <div class="result-panel">
+            <div class="panel-title">🎯 Classification Result</div>
             <div class="panel-sub">Results appear here after upload</div>
             <div class="empty-state">
                 <div class="empty-icon">♻️</div>
-                <div class="empty-text">Upload a waste image to classify</div>
+                <div class="empty-text">Upload a waste image</div>
                 <div class="empty-sub">Supports JPG, JPEG, PNG · Max 200MB</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
     else:
-        with st.spinner("Analyzing..."):
+        with st.spinner("Analyzing waste..."):
             pred_class, confidence, all_probs = predict(image, model)
+
         tip_title, tip_body, is_hazard = TIPS[pred_class]
         emoji = EMOJIS[pred_class]
         top2 = sorted(zip(CLASS_NAMES, all_probs), key=lambda x: x[1], reverse=True)[1]
         rank = sorted(all_probs, reverse=True).index(all_probs[CLASS_NAMES.index(pred_class)]) + 1
 
         st.markdown(f"""
-        <div class="panel">
-            <div class="panel-hd">🎯 Classification Result</div>
+        <div class="result-panel">
+            <div class="panel-title">🎯 Classification Result</div>
             <div class="panel-sub">AI analysis complete</div>
-            <div class="det-card">
-                <div class="det-lbl">DETECTED WASTE TYPE</div>
+            <div class="detection-card">
+                <div class="det-label">DETECTED WASTE TYPE</div>
                 <span class="det-emoji">{emoji}</span>
                 <div class="det-name">{pred_class.upper()}</div>
                 <div class="conf-track">
                     <div class="conf-fill" style="width:{confidence}%"></div>
                 </div>
-                <div class="conf-row">
+                <div class="conf-meta">
                     <span>Confidence Score</span>
                     <span class="conf-pct">{confidence:.1f}%</span>
                 </div>
@@ -387,16 +450,33 @@ with col2:
         """, unsafe_allow_html=True)
 
         if is_hazard:
-            st.markdown(f'<div class="hazard-card"><div class="hazard-title">{tip_title}</div><div class="hazard-body">{tip_body}</div></div>', unsafe_allow_html=True)
+            st.markdown(f"""
+            <div class="hazard-card">
+                <div class="hazard-title">{tip_title}</div>
+                <div class="hazard-body">{tip_body}</div>
+            </div>""", unsafe_allow_html=True)
         else:
-            st.markdown(f'<div class="tip-card"><div class="tip-title">{tip_title}</div><div class="tip-body">{tip_body}</div></div>', unsafe_allow_html=True)
+            st.markdown(f"""
+            <div class="tip-card">
+                <div class="tip-title">{tip_title}</div>
+                <div class="tip-body">{tip_body}</div>
+            </div>""", unsafe_allow_html=True)
 
         st.markdown(f"""
-        <div class="metrics-row">
-            <div class="metric-box"><div class="metric-val">{confidence:.0f}%</div><div class="metric-lbl">Confidence</div></div>
-            <div class="metric-box"><div class="metric-val">#{rank}</div><div class="metric-lbl">Rank</div></div>
-            <div class="metric-box"><div class="metric-val">{top2[1]*100:.0f}%</div><div class="metric-lbl">{top2[0][:8]}</div></div>
-        </div>
+            <div class="metrics-row">
+                <div class="metric-box">
+                    <div class="metric-val">{confidence:.0f}%</div>
+                    <div class="metric-lbl">Confidence</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-val">#{rank}</div>
+                    <div class="metric-lbl">Rank</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-val">{top2[1]*100:.0f}%</div>
+                    <div class="metric-lbl">{top2[0][:7]}</div>
+                </div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -407,53 +487,50 @@ with col2:
                 x=[p[1]*100 for p in pairs],
                 orientation='h',
                 marker=dict(
-                    color=['#16a34a' if p[0]==pred_class else '#f0fdf4' for p in pairs],
-                    line=dict(color=['#15803d' if p[0]==pred_class else '#bbf7d0' for p in pairs], width=1.5)
+                    color=['#16a34a' if p[0]==pred_class else '#dcfce7' for p in pairs],
+                    line=dict(color=['#14532d' if p[0]==pred_class else '#86efac' for p in pairs], width=1.5)
                 ),
                 text=[f"{p[1]*100:.1f}%" for p in pairs],
                 textposition='outside',
-                textfont=dict(color='#374151', size=11, family='Space Mono')
+                textfont=dict(color='#14532d', size=11, family='Space Mono')
             ))
             fig.update_layout(
                 paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
                 height=360, margin=dict(l=0, r=55, t=8, b=8),
                 xaxis=dict(showgrid=False, showticklabels=False,
                            range=[0, max(p[1]*100 for p in pairs)*1.3], zeroline=False),
-                yaxis=dict(tickfont=dict(color='#374151', size=12), gridcolor='rgba(0,0,0,0)'),
+                yaxis=dict(tickfont=dict(color='#14532d', size=12, family='Plus Jakarta Sans'), gridcolor='rgba(0,0,0,0)'),
                 showlegend=False
             )
             st.plotly_chart(fig, use_container_width=True)
 
-# ── Bottom strip ──────────────────────────────────────
+# ── Bottom info strip ─────────────────────────────────
 st.markdown("""
-<div class="bottom-grid">
-    <div class="arch-panel">
-        <div class="arch-title">🏗️ Model Architecture</div>
+<div class="bottom-strip">
+    <div class="arch-card">
+        <div class="arch-title">🏗️ Architecture</div>
         <div class="arch-row"><span class="arch-key">Backbone</span><span class="arch-val">MobileNetV2</span></div>
         <div class="arch-row"><span class="arch-key">Input Size</span><span class="arch-val">160×160×3</span></div>
-        <div class="arch-row"><span class="arch-key">Pretrained On</span><span class="arch-val">ImageNet</span></div>
-        <div class="arch-row"><span class="arch-key">Head Layers</span><span class="arch-val">Dense(256→128→12)</span></div>
+        <div class="arch-row"><span class="arch-key">Pretrained</span><span class="arch-val">ImageNet</span></div>
+        <div class="arch-row"><span class="arch-key">Head</span><span class="arch-val">Dense(256→128→12)</span></div>
         <div class="arch-row"><span class="arch-key">Regularization</span><span class="arch-val">Dropout 0.3 + 0.4</span></div>
-        <div class="arch-row"><span class="arch-key">Loss Function</span><span class="arch-val">Categorical Cross-Entropy</span></div>
+        <div class="arch-row"><span class="arch-key">Loss</span><span class="arch-val">Categorical Cross-Entropy</span></div>
         <div class="arch-row"><span class="arch-key">Optimizer</span><span class="arch-val">Adam</span></div>
-        <div class="arch-row"><span class="arch-key">Training Strategy</span><span class="arch-val">2-Phase Fine-tuning</span></div>
-        <div class="arch-row"><span class="arch-key">Phase 1 LR</span><span class="arch-val">0.001 (8 epochs)</span></div>
-        <div class="arch-row"><span class="arch-key">Phase 2 LR</span><span class="arch-val">0.00001 (5 epochs)</span></div>
+        <div class="arch-row"><span class="arch-key">Training</span><span class="arch-val">2-Phase Fine-tuning</span></div>
     </div>
-    <div class="perf-panel">
+    <div class="perf-card">
         <div class="perf-title">📊 Per-Class F1 Scores</div>
-        <div class="perf-row"><span class="perf-cls">clothes</span><div class="perf-track"><div class="perf-fill" style="width:99%"></div></div><span class="perf-pct">0.99</span></div>
-        <div class="perf-row"><span class="perf-cls">biological</span><div class="perf-track"><div class="perf-fill" style="width:96%"></div></div><span class="perf-pct">0.96</span></div>
-        <div class="perf-row"><span class="perf-cls">shoes</span><div class="perf-track"><div class="perf-fill" style="width:96%"></div></div><span class="perf-pct">0.96</span></div>
-        <div class="perf-row"><span class="perf-cls">battery</span><div class="perf-track"><div class="perf-fill" style="width:95%"></div></div><span class="perf-pct">0.95</span></div>
-        <div class="perf-row"><span class="perf-cls">green-glass</span><div class="perf-track"><div class="perf-fill" style="width:94%"></div></div><span class="perf-pct">0.94</span></div>
-        <div class="perf-row"><span class="perf-cls">cardboard</span><div class="perf-track"><div class="perf-fill" style="width:93%"></div></div><span class="perf-pct">0.93</span></div>
-        <div class="perf-row"><span class="perf-cls">plastic</span><div class="perf-track"><div class="perf-fill" style="width:86%"></div></div><span class="perf-pct">0.86</span></div>
-        <div class="perf-row"><span class="perf-cls">metal</span><div class="perf-track"><div class="perf-fill" style="width:85%"></div></div><span class="perf-pct">0.85</span></div>
+        <div class="perf-row"><span class="perf-class">clothes</span><div class="perf-bar-track"><div class="perf-bar-fill" style="width:99%"></div></div><span class="perf-pct">0.99</span></div>
+        <div class="perf-row"><span class="perf-class">biological</span><div class="perf-bar-track"><div class="perf-bar-fill" style="width:96%"></div></div><span class="perf-pct">0.96</span></div>
+        <div class="perf-row"><span class="perf-class">shoes</span><div class="perf-bar-track"><div class="perf-bar-fill" style="width:96%"></div></div><span class="perf-pct">0.96</span></div>
+        <div class="perf-row"><span class="perf-class">battery</span><div class="perf-bar-track"><div class="perf-bar-fill" style="width:95%"></div></div><span class="perf-pct">0.95</span></div>
+        <div class="perf-row"><span class="perf-class">cardboard</span><div class="perf-bar-track"><div class="perf-bar-fill" style="width:93%"></div></div><span class="perf-pct">0.93</span></div>
+        <div class="perf-row"><span class="perf-class">plastic</span><div class="perf-bar-track"><div class="perf-bar-fill" style="width:86%"></div></div><span class="perf-pct">0.86</span></div>
+        <div class="perf-row"><span class="perf-class">metal</span><div class="perf-bar-track"><div class="perf-bar-fill" style="width:85%"></div></div><span class="perf-pct">0.85</span></div>
     </div>
 </div>
 
-<div class="footer">
+<div class="footer-bar">
     <span>EcoSort AI · NeuralHack 2026 · MAI417-3 Deep Learning · Christ University</span>
     <span>MobileNetV2 · TensorFlow · Streamlit · Python</span>
 </div>
