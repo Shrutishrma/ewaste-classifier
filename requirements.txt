@@ -1,7 +1,5 @@
-streamlit
-keras
-tensorflow-cpu
-pillow
-plotly
-numpy
-h5py
+streamlit>=1.28.0
+tensorflow-cpu==2.15.0
+pillow>=10.0.0
+plotly>=5.0.0
+numpy>=1.24.0
