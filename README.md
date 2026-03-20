@@ -78,12 +78,14 @@ kaggle.com/datasets/mostafaabla/garbage-classification
 - NumPy, Pillow, Plotly
 
 ## Project Structure
+```
 ewaste-classifier/
 ├── app.py              ← Streamlit web application
 ├── best.keras          ← Trained model
 ├── requirements.txt    ← Python dependencies
 ├── runtime.txt         ← Python version for deployment
 └── README.md           ← Project documentation
+```
 
 Shruti Sharma— MSAIM, PG III Trimester
 Christ (Deemed to be University), Bangalore
