@@ -20,16 +20,22 @@ battery, biological, brown-glass, cardboard, clothes, green-glass, metal, paper,
 MobileNetV2 + Custom Classification Head
 
 Input (160x160 RGB image)
+
         ↓
    Rescaling + Data Augmentation (RandomFlip, RandomRotation)
+   
         ↓
    MobileNetV2 Base (pretrained on ImageNet, frozen in Phase 1)
+   
         ↓
    GlobalAveragePooling2D
+   
         ↓
    Dense(256, ReLU) + BatchNormalization + Dropout(0.4)
+   
         ↓
    Dense(128, ReLU) + Dropout(0.3)
+   
         ↓
 Output — Dense(12, Softmax)
 
