@@ -16,28 +16,21 @@ E-Waste Classifier solves this by automatically identifying the waste category f
 battery, biological, brown-glass, cardboard, clothes, green-glass, metal, paper, plastic, trash, white glass, shoes
 
 ## Architecture
-
-MobileNetV2 + Custom Classification Head
-
+```
 Input (160x160 RGB image)
-
         ↓
-   Rescaling + Data Augmentation (RandomFlip, RandomRotation)
-   
+Rescaling + Data Augmentation
         ↓
-   MobileNetV2 Base (pretrained on ImageNet, frozen in Phase 1)
-   
+MobileNetV2 Base (pretrained on ImageNet)
         ↓
-   GlobalAveragePooling2D
-   
+GlobalAveragePooling2D
         ↓
-   Dense(256, ReLU) + BatchNormalization + Dropout(0.4)
-   
+Dense(256) + BatchNorm + Dropout(0.4)
         ↓
-   Dense(128, ReLU) + Dropout(0.3)
-   
+Dense(128) + Dropout(0.3)
         ↓
 Output — Dense(12, Softmax)
+```
 
 ## Training Strategy
 Two-phase training approach:
